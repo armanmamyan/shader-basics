@@ -1,17 +1,12 @@
-precision mediump float;
+varying vec3 vNormal;
 
-uniform vec3 uColor;
-uniform sampler2D uTexture;
-
-varying float vRandom;
-varying float vElevation;
-varying vec2 vUv;
 
 void main() {
-    vec4 textureColor = texture2D(uTexture, vUv);
-    // Shadow Technique
-    textureColor.rgb *= vElevation * 2.0 + 0.5;
-    // gl_FragColor = vec4(uColor, 1.0);
-    gl_FragColor = vec4(vUv, 1.0, 1.0);
-    // gl_FragColor = textureColor;
+
+    vec3 light = vec3(0.5,0.2, 1.0);
+    light = normalize(light);
+
+    float dProd = max(.0, dot(vNormal, light));
+
+    gl_FragColor = vec4(dProd,dProd,dProd,1.0);
 }
